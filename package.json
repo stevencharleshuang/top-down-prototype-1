@@ -2,9 +2,10 @@
   "name": "top-down-prototype-1",
   "version": "1.0.0",
   "description": "A top-down hack and slash game prototype using Crafty.js",
-  "main": "server.js",
+  "main": "server/server.js",
   "scripts": {
-    "test": "test"
+    "test": "test",
+    "dev": "nodemon server/server.js"
   },
   "repository": {
     "type": "git",

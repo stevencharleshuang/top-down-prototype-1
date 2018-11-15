@@ -1,0 +1,16 @@
+* {
+  box-sizing: border-box;
+  text-align: center;
+}
+
+body {
+  background-color: black;
+  color: white;
+  display: grid;
+  grid-template-columns: 80%;
+  justify-content: center;
+}
+
+#cr-stage {
+  text-align: center;
+}
