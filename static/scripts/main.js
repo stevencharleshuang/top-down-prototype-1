@@ -49,6 +49,22 @@ $(document).ready(() => {
       if (player._y + 35 >= bottomWall._y) {
         player.y = bottomWall._y - 30;
       }
+    })
+    // Prevent player from clipping through enemy div
+    .onHit('enemy', () => {
+      console.log('collided with the enemy');
+      if (player._x <= enemy._x) {
+        player.x = enemy._x - 30;
+      }
+      if (player._x >= enemy._x) {
+        player.x = enemy._x + 30;
+      } 
+      if (player._y <= enemy._y) {
+        player.y = enemy._y - 30;
+      }
+      if (player._y >= enemy._y) {
+        player.y = enemy._y + 30;
+      }
     });
     
   // Enemy Entity
@@ -57,6 +73,8 @@ $(document).ready(() => {
   .color('red')
   .collision();
   
-  
+  let enemyPos = enemy;
+
+  console.log({ enemyPos })
 // Closes jQuery    
 });
