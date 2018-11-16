@@ -25,7 +25,7 @@ $(document).ready(() => {
   .color('brown');
   
   const bottomWall = Crafty.e("2D, DOM, Color, solid, bottom")
-  .attr({x: 0, y: 595, w: 800, h: 5})
+  .attr({x: 0, y: 570, w: 800, h: 5})
   .color('brown');
   
   // Player Entity
@@ -34,24 +34,25 @@ $(document).ready(() => {
     .color('blue')
     .fourway(250)
     .collision()
-    .onHit('solid', (e) => {
+    // Prevent player from clipping through border walls
+    .onHit('solid', () => {
       console.log('hit a wall', bottomWall._y);
       if (player._x <= leftWall._x) {
         player.x = leftWall._x + 5;
       }
-      if (player._x >= rightWall._x) {
-        player.x = rightWall._x - 10;
+      if (player._x + 35 >= rightWall._x) {
+        player.x = rightWall._x - 30;
       }
       if (player._y <= topWall._y) {
         player.y = topWall._y + 5;
       }
-      if (player._y >= bottomWall._y) {
-        player.y = bottomWall._y - 5;
+      if (player._y + 35 >= bottomWall._y) {
+        player.y = bottomWall._y - 30;
       }
     });
     
   // Enemy Entity
-  const enemy = Crafty.e('2D, DOM, Collision, Battle, Color')
+  const enemy = Crafty.e('2D, DOM, Collision, enemy, Color')
   .attr({x: 400, y: 300, h: 30, w: 30})
   .color('red')
   .collision();
