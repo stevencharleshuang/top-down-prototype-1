@@ -47,22 +47,32 @@ $(document).ready(() => {
       if (player._y + 35 >= bottomWall._y) player.y = bottomWall._y - 30;
     })
     // Prevent player from clipping through enemy div
-    .onHit('enemy', () => {
-      // console.log('collided with the enemy');
-      contact = true;
-      console.log('contact')
-      if (player._x <= enemy._x) player.x = enemy._x - 25;
-      if (player._x >= enemy._x) player.x = enemy._x + 25; 
-      if (player._y <= enemy._y) player.y = enemy._y - 25;
-      if (player._y >= enemy._y) player.y = enemy._y + 25;
-    }, () => {
-      contact = false;
-      console.log('no contact');
-    })
+    .onHit('enemy', 
+      // On Collision
+      () => {
+        // console.log('collided with the enemy');
+        contact = true;
+        // console.log('contact')
+        if (player._x <= enemy._x) player.x = enemy._x - 25;
+        if (player._x >= enemy._x) player.x = enemy._x + 25; 
+        if (player._y <= enemy._y) player.y = enemy._y - 25;
+        if (player._y >= enemy._y) player.y = enemy._y + 25;
+      }, 
+      // Off Collision
+      () => {
+        contact = false;
+        // console.log('no contact');
+      })
+    // Player Attack Control
     .bind('KeyDown', (e) => {
+      // 'E' Key attack binding
       if (e.key === Crafty.keys.E && contact === true) {
-        console.log('Player attacked!');
+        // console.log('Player attacked!', player);
+        player.color('green');
       }
+    })
+    .bind('KeyUp', () => {
+      player.color('blue');
     });
     
   // Enemy Entity
@@ -78,7 +88,7 @@ $(document).ready(() => {
     if (enemy._y + 35 >= bottomWall._y) enemy.y = bottomWall._y - 30;
   });
 
-  console.log({ player, });
+  // console.log({ player, });
 
 // Closes jQuery    
 });
