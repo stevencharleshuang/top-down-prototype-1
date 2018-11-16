@@ -88,6 +88,13 @@ $(document).ready(() => {
     if (enemy._y + 35 >= bottomWall._y) enemy.y = bottomWall._y - 30;
   });
 
+  // Text Entities
+  let playerHP = Crafty.e('2D, DOM, Text')
+    .attr({ x: 100, y: 100 })
+    .text('Player HP: ')
+    .textFont({ size: '20px', weight: '400', family: 'Press Start 2P' })
+    .textColor('#000');
+
   // console.log({ player, });
 
 // Closes jQuery    
