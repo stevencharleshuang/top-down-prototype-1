@@ -2,7 +2,11 @@ $(document).ready(() => {
   console.log('jQuery up and running!');
   
   Crafty.init();
-  
+  let contact = false;
+
+  // Helper Functions //////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////
+
   // Entity Declarations ///////////////////////////////////////////////////////
   //////////////////////////////////////////////////////////////////////////////
   
@@ -36,34 +40,28 @@ $(document).ready(() => {
     .collision()
     // Prevent player from clipping through border walls
     .onHit('solid', () => {
-      console.log('hit a wall', bottomWall._y);
-      if (player._x <= leftWall._x) {
-        player.x = leftWall._x + 5;
-      }
-      if (player._x + 35 >= rightWall._x) {
-        player.x = rightWall._x - 30;
-      }
-      if (player._y <= topWall._y) {
-        player.y = topWall._y + 5;
-      }
-      if (player._y + 35 >= bottomWall._y) {
-        player.y = bottomWall._y - 30;
-      }
+      // console.log('collided with a wall');
+      if (player._x <= leftWall._x) player.x = leftWall._x + 5;
+      if (player._x + 35 >= rightWall._x) player.x = rightWall._x - 30;
+      if (player._y <= topWall._y) player.y = topWall._y + 5;
+      if (player._y + 35 >= bottomWall._y) player.y = bottomWall._y - 30;
     })
     // Prevent player from clipping through enemy div
     .onHit('enemy', () => {
-      console.log('collided with the enemy');
-      if (player._x <= enemy._x) {
-        player.x = enemy._x - 30;
-      }
-      if (player._x >= enemy._x) {
-        player.x = enemy._x + 30;
-      } 
-      if (player._y <= enemy._y) {
-        player.y = enemy._y - 30;
-      }
-      if (player._y >= enemy._y) {
-        player.y = enemy._y + 30;
+      // console.log('collided with the enemy');
+      contact = true;
+      console.log('contact')
+      if (player._x <= enemy._x) player.x = enemy._x - 25;
+      if (player._x >= enemy._x) player.x = enemy._x + 25; 
+      if (player._y <= enemy._y) player.y = enemy._y - 25;
+      if (player._y >= enemy._y) player.y = enemy._y + 25;
+    }, () => {
+      contact = false;
+      console.log('no contact');
+    })
+    .bind('KeyDown', (e) => {
+      if (e.key === Crafty.keys.E && contact === true) {
+        console.log('Player attacked!');
       }
     });
     
@@ -71,10 +69,16 @@ $(document).ready(() => {
   const enemy = Crafty.e('2D, DOM, Collision, enemy, Color')
   .attr({x: 400, y: 300, h: 30, w: 30})
   .color('red')
-  .collision();
-  
-  let enemyPos = enemy;
+  .collision()
+  // Prevent enemy from clipping through border walls
+  .onHit('solid', () => {
+    if (enemy._x <= leftWall._x) enemy.x = leftWall._x + 5;
+    if (enemy._x + 35 >= rightWall._x) enemy.x = rightWall._x - 30;
+    if (enemy._y <= topWall._y) enemy.y = topWall._y + 5;
+    if (enemy._y + 35 >= bottomWall._y) enemy.y = bottomWall._y - 30;
+  });
 
-  console.log({ enemyPos })
+  console.log({ player, });
+
 // Closes jQuery    
 });
