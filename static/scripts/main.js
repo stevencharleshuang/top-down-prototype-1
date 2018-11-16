@@ -34,7 +34,7 @@ $(document).ready(() => {
   
   // Player Entity
   const player = Crafty.e('2D, DOM, Fourway, Collision, Color, player')
-    .attr({x: 10, y: 10, h: 30, w: 30})
+    .attr({x: 10, y: 10, h: 30, w: 30, hp: 100})
     .color('blue')
     .fourway(250)
     .collision()
@@ -63,21 +63,24 @@ $(document).ready(() => {
         contact = false;
         // console.log('no contact');
       })
-    // Player Attack Control
-    .bind('KeyDown', (e) => {
-      // 'E' Key attack binding
-      if (e.key === Crafty.keys.E && contact === true) {
-        // console.log('Player attacked!', player);
-        player.color('green');
-      }
+      // Player Attack Control
+      .bind('KeyDown', (e) => {
+        // 'E' Key attack binding
+        if (e.key === Crafty.keys.E && contact === true) {
+          // console.log('Player attacked!', player);
+          player.color('green');
+          enemy.hp -= 25;
+          console.log('Enemy HP: ', enemy.hp);
+        }
     })
     .bind('KeyUp', () => {
       player.color('blue');
+      if (enemy.hp <= 0) enemy.destroy();
     });
     
   // Enemy Entity
   const enemy = Crafty.e('2D, DOM, Collision, enemy, Color')
-  .attr({x: 400, y: 300, h: 30, w: 30})
+  .attr({x: 400, y: 300, h: 30, w: 30, hp: 100})
   .color('red')
   .collision()
   // Prevent enemy from clipping through border walls
@@ -95,7 +98,7 @@ $(document).ready(() => {
     .textFont({ size: '20px', weight: '400', family: 'Press Start 2P' })
     .textColor('#000');
 
-  // console.log({ player, });
+  console.log({ player, });
 
 // Closes jQuery    
 });
